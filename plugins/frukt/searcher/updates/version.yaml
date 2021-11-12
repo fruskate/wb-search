@@ -6,6 +6,3 @@
 1.0.3:
     - 'Created table frukt_searcher_queries'
     - builder_table_create_frukt_searcher_queries.php
-1.0.4:
-    - 'Updated table frukt_searcher_queries'
-    - builder_table_update_frukt_searcher_queries.php

@@ -12,7 +12,7 @@ class BuilderTableCreateFruktSearcherQueries extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('wbuser_id')->nullable();
-            $table->string('uq')->nullable();
+            $table->text('uq')->nullable();
             $table->integer('cnt')->nullable();
             $table->string('locale')->nullable();
             $table->integer('weekday')->nullable();
