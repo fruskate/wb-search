@@ -1,0 +1,19 @@
+columns:
+    wbuser_id:
+        label: 'ID ПОЛЬЗОВАТЕЛЯ'
+        type: text
+    uq:
+        label: 'ПОИСКОВЫЙ ЗАПРОС'
+        type: text
+    cnt:
+        label: ТОВАРОВ
+        type: number
+    locale:
+        label: ЛОКАЛЬ
+        type: text
+    weekday:
+        label: 'ДЕНЬ НЕДЕЛИ'
+        type: number
+    time:
+        label: ВРЕМЯ
+        type: text

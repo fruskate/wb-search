@@ -1,0 +1,25 @@
+fields:
+    wbuser_id:
+        label: 'ID ПОЛЬЗОВАТЕЛЯ'
+        span: auto
+        type: text
+    uq:
+        label: 'ПОИСКОВЫЙ ЗАПРОС'
+        span: auto
+        type: text
+    cnt:
+        label: ТОВАРОВ
+        span: auto
+        type: number
+    locale:
+        label: ЛОКАЛЬ
+        span: auto
+        type: text
+    weekday:
+        label: 'ДЕНЬ НЕДЕЛИ'
+        span: auto
+        type: number
+    time:
+        label: ВРЕМЯ
+        span: auto
+        type: datepicker

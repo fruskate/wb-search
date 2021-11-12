@@ -1,0 +1,24 @@
+plugin:
+    name: 'frukt.searcher::lang.plugin.name'
+    description: 'frukt.searcher::lang.plugin.description'
+    author: Frukt
+    icon: oc-icon-search
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: 'Поисковые подсказки'
+        url: /
+        icon: icon-search
+        sideMenu:
+            side-menu-item:
+                label: Загрузчик
+                url: frukt/searcher/loader
+                icon: icon-download
+            side-menu-item2:
+                label: 'Популярные запросы'
+                url: frukt/searcher/popular
+                icon: icon-star
+            side-menu-item3:
+                label: 'История запросов'
+                url: frukt/searcher/history
+                icon: icon-history

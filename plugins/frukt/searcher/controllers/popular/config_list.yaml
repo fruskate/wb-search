@@ -1,0 +1,12 @@
+list: $/frukt/searcher/models/popular/columns.yaml
+modelClass: Frukt\Searcher\Models\Popular
+title: Popular
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'frukt/searcher/popular/update/:id'

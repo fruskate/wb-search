@@ -1,0 +1,9 @@
+fields:
+    name:
+        label: ЗАПРОС
+        span: auto
+        type: text
+    popularity:
+        label: ПОПУЛЯРНОСТЬ
+        span: auto
+        type: number

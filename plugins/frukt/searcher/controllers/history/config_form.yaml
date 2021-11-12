@@ -1,0 +1,10 @@
+name: History
+form: $/frukt/searcher/models/item/fields.yaml
+modelClass: Frukt\Searcher\Models\Item
+defaultRedirect: frukt/searcher/history
+create:
+    redirect: 'frukt/searcher/history/update/:id'
+    redirectClose: frukt/searcher/history
+update:
+    redirect: frukt/searcher/history
+    redirectClose: frukt/searcher/history

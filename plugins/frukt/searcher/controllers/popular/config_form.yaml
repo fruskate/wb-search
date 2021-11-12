@@ -1,0 +1,10 @@
+name: Popular
+form: $/frukt/searcher/models/popular/fields.yaml
+modelClass: Frukt\Searcher\Models\Popular
+defaultRedirect: frukt/searcher/popular
+create:
+    redirect: 'frukt/searcher/popular/update/:id'
+    redirectClose: frukt/searcher/popular
+update:
+    redirect: frukt/searcher/popular
+    redirectClose: frukt/searcher/popular

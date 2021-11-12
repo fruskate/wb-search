@@ -1,0 +1,9 @@
+columns:
+    name:
+        label: ЗАПРОС
+        type: text
+        searchable: true
+    popularity:
+        label: ПОПУЛЯРНОСТЬ
+        type: number
+        searchable: true
