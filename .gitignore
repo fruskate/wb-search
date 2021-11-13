@@ -163,3 +163,5 @@ plugins/frukt/books/assets/json/books.json
 plugins/frukt/books/assets/xlsx/
 plugins/frukt/searcher/assets/datasets/search_history.csv
 plugins/frukt/searcher/assets/datasets/query_popularity.csv
+plugins/frukt/searcher/assets/datasets/query_popularity_tab.csv
+plugins/frukt/searcher/assets/datasets/search_history_tab.csv
