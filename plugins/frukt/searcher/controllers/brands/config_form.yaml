@@ -1,0 +1,10 @@
+name: Brands
+form: $/frukt/searcher/models/brand/fields.yaml
+modelClass: Frukt\Searcher\Models\Brand
+defaultRedirect: frukt/searcher/brands
+create:
+    redirect: 'frukt/searcher/brands/update/:id'
+    redirectClose: frukt/searcher/brands
+update:
+    redirect: frukt/searcher/brands
+    redirectClose: frukt/searcher/brands

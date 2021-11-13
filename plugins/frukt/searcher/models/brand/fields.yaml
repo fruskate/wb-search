@@ -1,0 +1,5 @@
+fields:
+    name:
+        label: 'НАЗВАНИЕ БРЕНДА'
+        span: auto
+        type: text

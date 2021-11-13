@@ -1,0 +1,12 @@
+fields:
+    name:
+        label: НАЗВАНИЕ
+        span: auto
+        type: text
+    parent:
+        label: РОДИТЕЛЬСКАЯ
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+        emptyOption: РОДИТЕЛЬСКАЯ

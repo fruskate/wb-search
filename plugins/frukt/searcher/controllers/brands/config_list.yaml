@@ -1,0 +1,12 @@
+list: $/frukt/searcher/models/brand/columns.yaml
+modelClass: Frukt\Searcher\Models\Brand
+title: Brands
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'frukt/searcher/brands/update/:id'

@@ -1,0 +1,10 @@
+name: Bests
+form: $/frukt/searcher/models/best/fields.yaml
+modelClass: Frukt\Searcher\Models\Best
+defaultRedirect: frukt/searcher/bests
+create:
+    redirect: 'frukt/searcher/bests/update/:id'
+    redirectClose: frukt/searcher/bests
+update:
+    redirect: frukt/searcher/bests
+    redirectClose: frukt/searcher/bests

@@ -1,0 +1,5 @@
+fields:
+    name:
+        label: СТРОКА
+        span: auto
+        type: text

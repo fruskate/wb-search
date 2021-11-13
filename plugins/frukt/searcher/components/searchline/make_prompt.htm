@@ -1,0 +1,56 @@
+{#
+{% for item in history %}
+    <div class="card">
+        <div class="card-body">{{ item.name }}</div>
+    </div>
+
+{% endfor %}
+#}
+
+
+<div class="searchPredictions active" id="predict">
+    {# <div class="grass"><img src="{{ 'assets/img/stem.png'|theme }}"/></div> #}
+    <div class="grass"></div>
+    <img src="{{ 'assets/img/grass.png'|theme }}"/>
+    <div class="ballsHolder">
+
+        <div class="ball textball" id="firstBall">{% if history[1].name|length > 50 %}{{ history[1].name|slice(0, 50) ~ '...' }}{% else %}{{ history[1].name }}{% endif %}</div>
+        <div class="ball textball" id="secondBall">{% if history[0].name|length > 50 %}{{ history[0].name|slice(0, 50) ~ '...' }}{% else %}{{ history[0].name }}{% endif %}</div>
+        <div class="ball textball" id="thirdBall">{% if history[2].name|length > 50 %}{{ history[2].name|slice(0, 50) ~ '...' }}{% else %}{{ history[2].name }}{% endif %}</div>
+        <div class="br"></div>
+        <div class="ball textball" id="fourthBall">{% if history[5].name|length > 50 %}{{ history[5].name|slice(0, 50) ~ '...' }}{% else %}{{ history[5].name }}{% endif %}</div>
+        <div class="ball textball" id="fifthBall">{% if history[3].name|length > 50 %}{{ history[3].name|slice(0, 50) ~ '...' }}{% else %}{{ history[3].name }}{% endif %}</div>
+        <div class="ball textball" id="sixthBall">{% if history[4].name|length > 50 %}{{ history[4].name|slice(0, 50) ~ '...' }}{% else %}{{ history[4].name }}{% endif %}</div>
+        <div class="ball textball" id="seventhBall">{% if history[6].name|length > 50 %}{{ history[6].name|slice(0, 50) ~ '...' }}{% else %}{{ history[6].name }}{% endif %}</div>
+        <div class="br"></div>
+        <div class="ball textball" id="eightBall">{% if history[8].name|length > 50 %}{{ history[8].name|slice(0, 50) ~ '...' }}{% else %}{{ history[8].name }}{% endif %}</div>
+        <div class="ball textball" id="ninthBall">{% if history[7].name|length > 50 %}{{ history[7].name|slice(0, 50) ~ '...' }}{% else %}{{ history[7].name }}{% endif %}</div>
+        <div class="ball textball" id="tenthBall">{% if history[9].name|length > 50 %}{{ history[9].name|slice(0, 50) ~ '...' }}{% else %}{{ history[9].name }}{% endif %}</div>
+        <div class="br"></div>
+        <div class="ball textball" id="eleventhBall">{% if history[10].name|length > 50 %}{{ history[10].name|slice(0, 50) ~ '...' }}{% else %}{{ history[10].name }}{% endif %}</div>
+        <div class="ball textball" id="twelfthBall">{% if history[11].name|length > 50 %}{{ history[11].name|slice(0, 50) ~ '...' }}{% else %}{{ history[11].name }}{% endif %}</div>
+    </div>
+    <div class="dot">WILDBERRIES</div>
+    <div class="dot">WILDBERRIES</div>
+    <div class="dot">WILDBERRIES</div>
+    <div class="dot">WILDBERRIES</div>
+    <div class="dot">WILDBERRIES</div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+
+</div>
+
+
+    <script>
+        makeMagia();
+    </script>

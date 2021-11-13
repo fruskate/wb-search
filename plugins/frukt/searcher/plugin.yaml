@@ -22,3 +22,15 @@ navigation:
                 label: 'История запросов'
                 url: frukt/searcher/history
                 icon: icon-history
+            side-menu-item4:
+                label: Бренды
+                url: frukt/searcher/brands
+                icon: icon-slack
+            side-menu-item5:
+                label: 'Список лучших'
+                url: frukt/searcher/bests
+                icon: icon-cubes
+            side-menu-item6:
+                label: Категории
+                url: frukt/searcher/categories
+                icon: icon-sitemap

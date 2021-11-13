@@ -1,0 +1,267 @@
+@font-face {
+    font-family: "SagataBold";
+    src: url('../fonts/SagataBold.otf');
+}
+@font-face {
+    font-family: "LatoLight";
+    src: url('../fonts/Lato-Light.ttf');
+}
+@font-face {
+    font-family: "LatoReg";
+    src: url('../fonts/Lato-Regular.ttf');
+}
+@font-face {
+    font-family: "LatoBold";
+    src: url('../fonts/Lato-Bold.ttf');
+}
+@font-face {
+    font-family: "SagataSemiReg";
+    src: url('../fonts/Merriweather-Regular.ttf');
+}
+
+
+*{
+    padding: 0;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    outline: none;
+}
+
+input {
+    z-index: 500 !important;
+    position: absolute !important;
+    width: 60% !important;
+    margin: 0 auto !important;
+}
+
+body{
+    background-color: #ffffff;
+}
+
+
+
+/*____SearchPredictions____*/
+
+
+
+.searchPredictions{
+    padding: 0;
+    margin: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    color: #000000;
+    left: 0;
+    top: 100px;
+    border-radius: 0 0 20px 20px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-color: #fff;
+    transform: translate(0, -3000px);
+    transition: opacity 0.5s ease;
+}
+.grass{
+    display: block;
+    position: absolute;
+    top: -200px;
+    z-index: 0;
+
+}
+
+.ballsHolder{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    row-gap: 0px;
+}
+.searchPredictions.active {
+
+    transform: translate(0px, 0px);
+    opacity: 1;
+
+}
+.dot{
+    font-size: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0.3;
+    border-radius: 300px;
+    z-index: 1;
+    position: absolute;
+    color: white;
+}
+
+.searchPredictions.active .ball {
+    transform: scale(1, 1) translate(0px , 20px);
+}
+.br{
+    flex-basis: 100%;
+    height: 0;
+}
+.ball{
+    box-shadow:  0px 0px 13px rgba(0,0,0,0.5);;
+    z-index: 200;
+    cursor: pointer;
+    background-color: #ae52a7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 140px;
+    border: 1px solid #ae52a7;
+    border-radius: 150px;
+    transform: scale(1, 1) translate(0px , -100px);
+    transition: all 0.6s ease;
+    color: white;
+}
+.ball.textball{
+    line-height: 20px;
+    text-transform: uppercase;
+    opacity: 1;
+    color: #fff;
+    font-size: 9pt;
+    font-family: "SagataSemiReg";
+    text-align: center;
+    padding: 5px;
+}
+
+/*____CurrentBalls____*/
+
+#firstBall{
+    width: 150px;
+    height: 150px;
+    margin-top: 40px;
+    transition: all 0.6s ease;
+}
+#firstBall:hover{
+    width: 165px;
+    height: 165px;
+}
+#secondBall{
+    width: 200px;
+    height: 200px;
+    transition: all 0.5s ease;
+}
+#secondBall:hover{
+    width: 210px;
+    height: 210px;
+}
+#thirdBall{
+    width: 150px;
+    height: 150px;
+    margin-top: 40px;
+    transition: all 0.6s ease;
+}
+#thirdBall:hover{
+    width: 165px;
+    height: 165px;
+}
+#fourthBall{
+    margin-top: 15px;
+    transition: all 0.7s ease;
+}
+#fifthBall{
+    width: 150px;
+    height: 150px;
+    margin-top: -25px;
+    transition: all 0.6s ease;
+}
+#fifthBall:hover{
+    width: 165px;
+    height: 165px;
+}
+#sixthBall{
+    width: 150px;
+    height: 150px;
+    margin-top: -25px;
+    transition: all 0.6s ease;
+}
+#sixthBall:hover{
+    width: 165px;
+    height: 165px;
+}
+#seventhBall{
+    margin-top: 15px;
+    transition: all 0.7s ease;
+}
+#eightBall{
+    transition: all 0.7s ease;
+}
+#ninthBall{
+    margin-top: -40px;
+    transition: all 0.7s ease;
+}
+#tenthBall{
+    transition: all 0.7s ease;
+}
+#eleventhBall{
+    width: 130px;
+    height: 130px;
+    transition: all 0.8s ease;
+}
+#eleventhBall:hover {
+    width: 165px;
+    height: 165px;
+}
+#twelfthBall{
+    width: 130px;
+    height: 130px;
+    transition: all 0.8s ease;
+}
+#twelfthBall:hover {
+    width: 165px;
+    height: 165px;
+}
+/*____CurrentBalls____*/
+.ball:hover{
+    background-color: #aa1296;
+    width: 165px;
+    height: 165px;
+}
+/*____SearchPredictions____*/
+
+@media (max-width: 767px) {
+
+}
+@media (max-width: 540px) {
+
+    .HeadContainer{
+        flex-direction: column;
+        align-items: center;
+    }
+    .HeadContainer h1{
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .HeadContainer input{
+        align-items: center;
+        width: 90%;
+        margin-bottom: 20px;
+    }
+    .head-hold{
+        height: auto;
+    }
+
+}
+
+
+@media (max-width: 425px) {
+    .HeadContainer input{
+        align-items: center;
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}

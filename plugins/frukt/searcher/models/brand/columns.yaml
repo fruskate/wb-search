@@ -1,0 +1,5 @@
+columns:
+    name:
+        label: 'НАЗВАНИЕ БРЕНДА'
+        type: text
+        searchable: true

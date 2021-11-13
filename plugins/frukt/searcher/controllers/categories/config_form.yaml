@@ -1,0 +1,10 @@
+name: Categories
+form: $/frukt/searcher/models/category/fields.yaml
+modelClass: Frukt\Searcher\Models\Category
+defaultRedirect: frukt/searcher/categories
+create:
+    redirect: 'frukt/searcher/categories/update/:id'
+    redirectClose: frukt/searcher/categories
+update:
+    redirect: frukt/searcher/categories
+    redirectClose: frukt/searcher/categories

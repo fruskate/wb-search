@@ -6,6 +6,9 @@ class Plugin extends PluginBase
 {
     public function registerComponents()
     {
+        return [
+            'Frukt\Searcher\Components\SearchLine' => 'searchLine'
+        ];
     }
 
     public function registerSettings()
