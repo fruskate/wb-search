@@ -7,3 +7,12 @@ columns:
         label: ПОПУЛЯРНОСТЬ
         type: number
         searchable: true
+    shows:
+        label: ПОКАЗОВ
+        type: number
+    clicks:
+        label: КЛИКОВ
+        type: number
+    ctr:
+        label: CTR
+        type: number

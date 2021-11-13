@@ -1,5 +1,6 @@
 <?php namespace Frukt\Searcher\Models;
 
+use Frukt\Searcher\Classes\LangCorrect;
 use Model;
 
 /**
@@ -27,5 +28,22 @@ class Popular extends Model
     public $rules = [
     ];
 
-    protected $fillable = ['name', 'popularity'];
+    protected $fillable = ['name', 'popularity', 'shows', 'clicks', 'ctr'];
+
+
+    public function scopeSearchInName($query, array $searchQueries): void
+    {
+        foreach($searchQueries as $searchQuery) {
+            $searchQuery = $this->convertLang($searchQuery);
+            $query->where('name', 'like', '%'. $searchQuery .'%');
+        }
+        $query->where('name', '!=', $searchQueries[0]);
+    }
+
+    // Конвертим в верную раскладку
+    public function convertLang($text)
+    {
+        $corrector = new LangCorrect();
+        return $corrector->parse($text, 2);
+    }
 }

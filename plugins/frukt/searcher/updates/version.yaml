@@ -18,3 +18,15 @@
 1.0.7:
     - 'Updated table frukt_searcher_categories'
     - builder_table_update_frukt_searcher_categories.php
+1.0.8:
+    - 'Created table frukt_searcher_buys'
+    - builder_table_create_frukt_searcher_buys.php
+1.0.9:
+    - 'Updated table frukt_searcher_populars'
+    - builder_table_update_frukt_searcher_populars.php
+1.0.10:
+    - 'Updated table frukt_searcher_populars'
+    - builder_table_update_frukt_searcher_populars_2.php
+1.0.11:
+    - 'Updated table frukt_searcher_populars'
+    - builder_table_update_frukt_searcher_populars_3.php
