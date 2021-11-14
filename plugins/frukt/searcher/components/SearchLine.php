@@ -65,6 +65,15 @@ class SearchLine extends ComponentBase
 
     public function onBuy()
     {
+        $query = $this->param('query');
+        $popular = Popular::where('name', $query)->first();
+        if ($popular) {
+            $newBuys = $popular->buys + 1;
+            $popular->ctr = round(($popular->clicks / $popular->shows) * 100, 2) + round(($newBuys / $popular->shows) * 100, 2);
+            $popular->buys = $newBuys;
+            $popular->save();
+        }
+
         return [
             '#wellDone' => '<div class="alert alert-info">Отлично. С покупкой!<br><a href="/">Вернуться к поиску</a></div>'
         ];
@@ -79,15 +88,27 @@ class SearchLine extends ComponentBase
         foreach ($populars as $item) {
             $newShows = $item->shows + 1;
             $item->shows = $newShows;
-            $item->ctr = round(($item->clicks / $newShows) * 100, 2);
+            $item->ctr = round(($item->clicks / $newShows) * 100, 2) + round(($item->buys / $newShows) * 100, 2);
             $item->save();
         }
 
-        $popular = Popular::where('name', $query)->firstOrCreate(['name' => $query, 'popularity' => 1]);
-        $newClicks = $popular->clicks + 1;
-        $popular->ctr = round(($newClicks / $popular->shows) * 100, 2);
-        $popular->clicks = $newClicks;
-        $popular->save();
+        $popular = Popular::where('name', $query)->first();
+        if ($popular) {
+            $newClicks = $popular->clicks + 1;
+            $popular->ctr = round(($newClicks / $popular->shows) * 100, 2) + round(($popular->buys / $popular->shows) * 100, 2);
+            $popular->clicks = $newClicks;
+            $popular->save();
+        } else {
+            Popular::create([
+                'name' => $query,
+                'popularity' => 0,
+                'shows' => 0,
+                'clicks' => 1,
+                'buys' => 1,
+                'ctr' => 0
+            ]);
+        }
+
 
 
         return \Redirect::to('/search/'.$query);
@@ -106,7 +127,7 @@ class SearchLine extends ComponentBase
 
         $searchQuery = $spacePosition === true ? $this->devideWords($query) : [$query];
         return Popular::searchInName($searchQuery)
-            ->orderBy('popularity', 'desc')
+            ->orderBy('ctr', 'desc')
             ->take(12)
             ->get();
     }

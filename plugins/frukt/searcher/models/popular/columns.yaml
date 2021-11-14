@@ -16,3 +16,6 @@ columns:
     ctr:
         label: CTR
         type: number
+    buys:
+        label: ПОКУПОК
+        type: number

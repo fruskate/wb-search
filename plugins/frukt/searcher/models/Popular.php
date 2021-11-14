@@ -28,7 +28,7 @@ class Popular extends Model
     public $rules = [
     ];
 
-    protected $fillable = ['name', 'popularity', 'shows', 'clicks', 'ctr'];
+    protected $fillable = ['name', 'popularity', 'shows', 'clicks', 'buys', 'ctr'];
 
 
     public function scopeSearchInName($query, array $searchQueries): void
