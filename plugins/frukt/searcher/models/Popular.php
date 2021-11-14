@@ -33,11 +33,31 @@ class Popular extends Model
 
     public function scopeSearchInName($query, array $searchQueries): void
     {
+        $searchString = '*';
+        $q = 1;
         foreach($searchQueries as $searchQuery) {
+            $searchQuery = $this->convertLang($searchQuery);
+            if ($q == 1) {
+                $searchString .= $searchQuery;
+            } else {
+                $searchString .= '*+'.$searchQuery;
+            }
+            $q++;
+        }
+        $searchString .= '*';
+
+        //array_walk($searchQueries, [$this, 'convertLang']);
+        //$searchString = '*' . implode('*+', $searchQueries) .'*';
+
+        $query->selectRaw("*, MATCH(name)AGAINST('".$searchString."')")
+            ->whereRaw("MATCH(name)AGAINST('".$searchString."' IN BOOLEAN MODE)");
+
+
+        /* foreach($searchQueries as $searchQuery) {
             $searchQuery = $this->convertLang($searchQuery);
             $query->where('name', 'like', '%'. $searchQuery .'%');
         }
-        $query->where('name', '!=', $searchQueries[0]);
+        $query->where('name', '!=', implode(' ', $searchQueries)); */
     }
 
     // Конвертим в верную раскладку

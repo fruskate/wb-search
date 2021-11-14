@@ -54,6 +54,7 @@ class SearchLine extends ComponentBase
                 if ($history->count() < 1) {
                     $history = $this->searcher(mb_substr($query, 0, -1));
                 }
+                trace_log($history);
 
                 return [
                     '#result' => $this->renderPartial($this . "::make_prompt_type".$showType, [
@@ -88,6 +89,9 @@ class SearchLine extends ComponentBase
                 'buys' => 0,
                 'ctr' => 0
             ]);
+        } else {
+            $popular->shows = $popular->shows + 1;
+            $popular->save();
         }
 
         return \Redirect::to('/search/'.$query);
@@ -115,31 +119,30 @@ class SearchLine extends ComponentBase
     {
         $query = post('choice_name');
 
-        $populars = Popular::whereIn('id', post('strings'))->get();
+        $populars = \Db::table('frukt_searcher_populars')->whereIn('id', post('strings'))->get();
 
         foreach ($populars as $item) {
             $newShows = $item->shows + 1;
-            $item->shows = $newShows;
-            $item->ctr = round(($item->clicks / $newShows) * 100, 2) + round(($item->buys / $newShows) * 100, 2);
-            $item->save();
+
+            \Db::table('frukt_searcher_populars')->where('id', $item->id)->update([
+                'ctr' => round(($item->clicks / $newShows) * 100, 2) + round(($item->buys / $newShows) * 100, 2),
+                'shows' => $newShows,
+            ]);
         }
 
-        $popular = Popular::where('name', $query)->first();
+        $popular = \Db::table('frukt_searcher_populars')->where('name', $query)->first();
+
+        //Popular::where('name', $query)->first();
         if ($popular) {
             $newClicks = $popular->clicks + 1;
             $clickCtr = ($popular->shows > 0)? round(($newClicks / $popular->shows) * 100, 2) : 0;
             $buyCtr = ($popular->shows > 0)? round(($popular->buys / $popular->shows) * 100, 2) : 0;
-            $popular->ctr = $clickCtr + $buyCtr;
-            $popular->clicks = $newClicks;
-            $popular->save();
-        } else {
-            Popular::create([
-                'name' => $query,
-                'popularity' => 0,
-                'shows' => 0,
-                'clicks' => 1,
-                'buys' => 1,
-                'ctr' => 0
+
+            //trace_log($popular->id, $newClicks, $clickCtr, $buyCtr, $clickCtr + $buyCtr);
+
+            \Db::table('frukt_searcher_populars')->where('id', $popular->id)->update([
+                'ctr' => $clickCtr + $buyCtr,
+                'clicks' => $newClicks,
             ]);
         }
 
@@ -158,20 +161,27 @@ class SearchLine extends ComponentBase
     public function searcher($query)
     {
         $spacePosition = strpos($query, ' ');
-
         $searchQuery = $spacePosition ? $this->devideWords($query) : [$query];
-
-        $populars = Popular::searchInName($searchQuery);
-
         $searchType = Settings::get('search_type', 1);
+
+        if (in_array($searchType, [1,2])) {
+            $populars = Popular::searchInName($searchQuery);
+        } elseif ($searchType == 3) {
+            $populars = Item::searchInUQ($searchQuery);
+        }
+
+
+
 
         if ($searchType == 1) {
             $populars = $populars->orderBy('popularity', 'desc');
         } elseif ($searchType == 2) {
             $populars = $populars->orderBy('ctr', 'desc');
+        } elseif ($searchType == 3) {
+            // автоматом сортирует
         }
         return $populars
-            ->take(12)
+            ->limit(12)
             ->get();
     }
 

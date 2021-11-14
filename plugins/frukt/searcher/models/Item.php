@@ -1,5 +1,6 @@
 <?php namespace Frukt\Searcher\Models;
 
+use Frukt\Searcher\Classes\LangCorrect;
 use Model;
 
 /**
@@ -28,4 +29,31 @@ class Item extends Model
     ];
 
     protected $fillable = ['wbuser_id', 'uq', 'cnt', 'locale', 'weekday', 'time'];
+
+    public function scopeSearchInUQ($query, array $searchQueries): void
+    {
+        $searchString = '*';
+        $q = 1;
+        foreach($searchQueries as $searchQuery) {
+            $searchQuery = $this->convertLang($searchQuery);
+            if ($q == 1) {
+                $searchString .= $searchQuery;
+            } else {
+                $searchString .= '*+'.$searchQuery;
+            }
+            $q++;
+        }
+        $searchString .= '*';
+
+        $query->selectRaw("*, MATCH(uq)AGAINST('".$searchString."')")
+            ->whereRaw("MATCH(uq)AGAINST('".$searchString."' IN BOOLEAN MODE)");
+
+    }
+
+    // Конвертим в верную раскладку
+    public function convertLang($text)
+    {
+        $corrector = new LangCorrect();
+        return $corrector->parse($text, 2);
+    }
 }

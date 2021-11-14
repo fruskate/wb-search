@@ -7,6 +7,7 @@ fields:
         options:
             1: СТАНДАРТНЫЙ WB
             2: НА ОСНОВЕ CTR ПОКУПОК И ПОКАЗОВ
+            3: ПОИСК ПО ИСТОРИИ ПОИСКОВ
     show_type:
         label: ВИД ПОИСКА
         type: dropdown
@@ -15,6 +16,7 @@ fields:
         options:
             1: КРАСИВЫЙ
             2: КАК ОБЫЧНО
+            3: ТЕСТ ВЫДАЧИ ПО ИСТОРИИ ЗАПРОСОВ
     section1:
         type: section
         span: full

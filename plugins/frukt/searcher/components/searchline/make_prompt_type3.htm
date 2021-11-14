@@ -1,0 +1,8 @@
+<div class="card">
+    <div class="card-body">
+        {% for item in history %}
+                {{ item.uq }}
+            {% if not loop.last %}<hr>{% endif %}
+        {% endfor %}
+    </div>
+</div>
