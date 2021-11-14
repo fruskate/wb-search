@@ -1,0 +1,43 @@
+fields:
+    search_type:
+        label: АЛГОРИТМ
+        type: dropdown
+        default: 1
+        span: auto
+        options:
+            1: СТАНДАРТНЫЙ WB
+            2: НА ОСНОВЕ CTR ПОКУПОК И ПОКАЗОВ
+    show_type:
+        label: ВИД ПОИСКА
+        type: dropdown
+        default: 1
+        span: auto
+        options:
+            1: КРАСИВЫЙ
+            2: КАК ОБЫЧНО
+    section1:
+        type: section
+        span: full
+        label: Дополнительные настройки для алгоритма
+        trigger:
+            action: show
+            field: search_type
+            condition: value[2]
+    click_rate:
+        label: CLICK RATE
+        type: number
+        span: auto
+        default: 1
+        trigger:
+            action: show
+            field: search_type
+            condition: value[2]
+    buy_rate:
+        label: BUY RATE
+        type: number
+        span: auto
+        default: 1
+        trigger:
+            action: show
+            field: search_type
+            condition: value[2]

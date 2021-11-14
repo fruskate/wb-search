@@ -30,10 +30,7 @@ a{
 }
 
 input {
-    z-index: 500 !important;
-    position: absolute !important;
-    width: 60% !important;
-    margin: 0 auto !important;
+
 }
 
 body{

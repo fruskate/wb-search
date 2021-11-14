@@ -1,10 +1,12 @@
 <?php namespace Frukt\Searcher\Components;
 
+use Cassandra\Set;
 use Cms\Classes\ComponentBase;
 use Frukt\Searcher\Classes\LangCorrect;
 use Frukt\Searcher\Controllers\History;
 use Frukt\Searcher\Models\Item;
 use Frukt\Searcher\Models\Popular;
+use Frukt\Searcher\Models\Settings;
 
 /**
  * SearchLine Component
@@ -26,10 +28,12 @@ class SearchLine extends ComponentBase
 
     public function onRun()
     {
-
+        $showType = Settings::get('show_type', 1);
 
         if ($this->page->id == 'index') {
-            $this->addJs('assets/js/app.js');
+            if ($showType == 1) {
+                $this->addJs('assets/js/app.js');
+            }
         } elseif ($this->page->id == 'search') {
             $this->page['query'] = $this->param('query');
         }
@@ -37,6 +41,7 @@ class SearchLine extends ComponentBase
 
     public function onSearch()
     {
+        $showType = Settings::get('show_type', 1);
         // Определяем брендовый ли запрос
         try {
             if (mb_strlen(post('s')) > 0) {
@@ -49,7 +54,7 @@ class SearchLine extends ComponentBase
                 }
 
                 return [
-                    '#result' => $this->renderPartial($this . "::make_prompt", [
+                    '#result' => $this->renderPartial($this . "::make_prompt_type".$showType, [
                         'history' => $history
                     ]),
                 ];
@@ -63,13 +68,34 @@ class SearchLine extends ComponentBase
         }
     }
 
+    public function onMakeButtonSearch()
+    {
+        $query = trim(post('s'));
+        $popular = Popular::where('name', $query)->first();
+
+        if (!$popular) {
+            Popular::create([
+                'name' => $query,
+                'popularity' => 0,
+                'shows' => 1,
+                'clicks' => 0,
+                'buys' => 0,
+                'ctr' => 0
+            ]);
+        }
+
+        return \Redirect::to('/search/'.$query);
+    }
+
     public function onBuy()
     {
         $query = $this->param('query');
         $popular = Popular::where('name', $query)->first();
         if ($popular) {
             $newBuys = $popular->buys + 1;
-            $popular->ctr = round(($popular->clicks / $popular->shows) * 100, 2) + round(($newBuys / $popular->shows) * 100, 2);
+            $clicksCtr = ($popular->shows > 0)? round(($popular->clicks / $popular->shows) * 100, 2) : 0;
+            $buysCtr = ($popular->shows > 0)? round(($newBuys / $popular->shows) * 100, 2) : 0;
+            $popular->ctr = $clicksCtr + $buysCtr;
             $popular->buys = $newBuys;
             $popular->save();
         }
@@ -95,7 +121,9 @@ class SearchLine extends ComponentBase
         $popular = Popular::where('name', $query)->first();
         if ($popular) {
             $newClicks = $popular->clicks + 1;
-            $popular->ctr = round(($newClicks / $popular->shows) * 100, 2) + round(($popular->buys / $popular->shows) * 100, 2);
+            $clickCtr = ($popular->shows > 0)? round(($newClicks / $popular->shows) * 100, 2) : 0;
+            $buyCtr = ($popular->shows > 0)? round(($popular->buys / $popular->shows) * 100, 2) : 0;
+            $popular->ctr = $clickCtr + $buyCtr;
             $popular->clicks = $newClicks;
             $popular->save();
         } else {
@@ -126,8 +154,17 @@ class SearchLine extends ComponentBase
         $spacePosition = strpos($query, ' ');
 
         $searchQuery = $spacePosition === true ? $this->devideWords($query) : [$query];
-        return Popular::searchInName($searchQuery)
-            ->orderBy('ctr', 'desc')
+
+        $populars = Popular::searchInName($searchQuery);
+
+        $searchType = Settings::get('search_type', 1);
+
+        if ($searchType == 1) {
+            $populars = $populars->orderBy('popularity', 'desc');
+        } elseif ($searchType == 2) {
+            $populars = $populars->orderBy('ctr', 'desc');
+        }
+        return $populars
             ->take(12)
             ->get();
     }

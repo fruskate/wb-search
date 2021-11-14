@@ -34,3 +34,7 @@ navigation:
                 label: Категории
                 url: frukt/searcher/categories
                 icon: icon-sitemap
+            side-menu-item7:
+                label: Настройки
+                url: system/settings/update/frukt/searcher/settings
+                icon: icon-cogs

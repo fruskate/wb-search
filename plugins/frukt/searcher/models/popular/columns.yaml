@@ -13,9 +13,10 @@ columns:
     clicks:
         label: КЛИКОВ
         type: number
-    ctr:
-        label: CTR
-        type: number
     buys:
         label: ПОКУПОК
         type: number
+    ctr:
+        label: CTR
+        type: number
+
