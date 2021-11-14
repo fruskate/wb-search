@@ -4,6 +4,7 @@ use Cassandra\Set;
 use Cms\Classes\ComponentBase;
 use Frukt\Searcher\Classes\LangCorrect;
 use Frukt\Searcher\Controllers\History;
+use Frukt\Searcher\Models\Brand;
 use Frukt\Searcher\Models\Item;
 use Frukt\Searcher\Models\Popular;
 use Frukt\Searcher\Models\Settings;
@@ -47,6 +48,7 @@ class SearchLine extends ComponentBase
             if (mb_strlen(post('s')) > 0) {
                 $query = trim(post('s'));
 
+                $brand = $this->brander($query);
                 $history = $this->searcher($query);
 
                 if ($history->count() < 1) {
@@ -55,12 +57,16 @@ class SearchLine extends ComponentBase
 
                 return [
                     '#result' => $this->renderPartial($this . "::make_prompt_type".$showType, [
-                        'history' => $history
+                        'history' => $history,
                     ]),
+                    '#brand' => $this->renderPartial($this ."::make_brand", [
+                        'brand' => $brand
+                    ])
                 ];
             } else {
                 return [
                     '#result' => '',
+                    '#brand' => '',
                 ];
             }
         } catch (\Exception $exception) {
@@ -153,7 +159,7 @@ class SearchLine extends ComponentBase
     {
         $spacePosition = strpos($query, ' ');
 
-        $searchQuery = $spacePosition === true ? $this->devideWords($query) : [$query];
+        $searchQuery = $spacePosition ? $this->devideWords($query) : [$query];
 
         $populars = Popular::searchInName($searchQuery);
 
@@ -167,5 +173,37 @@ class SearchLine extends ComponentBase
         return $populars
             ->take(12)
             ->get();
+    }
+
+    private function brander($query)
+    {
+        trace_log('Попали');
+        $spacePosition = strpos($query, ' ');
+
+        $searchQuery = $spacePosition ? $this->devideWords($query) : [$query];
+
+        trace_log($spacePosition, $searchQuery);
+
+        $brand = Brand::where('name', $searchQuery[0]);
+
+        if (count($searchQuery) > 1) {
+            $q = 1;
+            foreach ($searchQuery as $item) {
+                trace_log($item);
+                if ($q > 1) {
+                    $brand = $brand->orWhere('name', $item);
+                }
+                $q++;
+            }
+        }
+
+        $brand = $brand->first();
+
+        if ($brand) {
+            trace_log($brand->name);
+            return $brand->name;
+        } else {
+            return false;
+        }
     }
 }
