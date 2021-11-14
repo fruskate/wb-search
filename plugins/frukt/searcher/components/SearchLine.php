@@ -184,14 +184,20 @@ class SearchLine extends ComponentBase
 
         trace_log($spacePosition, $searchQuery);
 
-        $brand = Brand::where('name', $searchQuery[0]);
+        $brand = Brand::where('name', $searchQuery[0])
+            ->orWhere('name2', $searchQuery[0])
+            ->orWhere('name3', $searchQuery[0])
+            ->orWhere('name4', $searchQuery[0]);
 
         if (count($searchQuery) > 1) {
             $q = 1;
             foreach ($searchQuery as $item) {
                 trace_log($item);
                 if ($q > 1) {
-                    $brand = $brand->orWhere('name', $item);
+                    $brand = $brand->orWhere('name', $item)
+                        ->orWhere('name2', $item)
+                        ->orWhere('name3', $item)
+                        ->orWhere('name4', $item);
                 }
                 $q++;
             }

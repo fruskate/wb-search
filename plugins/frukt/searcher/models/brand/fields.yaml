@@ -3,3 +3,15 @@ fields:
         label: 'НАЗВАНИЕ БРЕНДА'
         span: auto
         type: text
+    name2:
+        label: ВАРИАНТ2
+        span: auto
+        type: text
+    name3:
+        label: ВАРИАНТ3
+        span: auto
+        type: text
+    name4:
+        label: ВАРИАНТ4
+        span: auto
+        type: text

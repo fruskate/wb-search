@@ -33,3 +33,6 @@
 1.0.12:
     - 'Updated table frukt_searcher_populars'
     - builder_table_update_frukt_searcher_populars_4.php
+1.0.13:
+    - 'Updated table frukt_searcher_brands'
+    - builder_table_update_frukt_searcher_brands.php
