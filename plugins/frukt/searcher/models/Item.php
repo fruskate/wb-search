@@ -45,8 +45,8 @@ class Item extends Model
         }
         $searchString .= '*';
 
-        $query->selectRaw("*, MATCH(uq)AGAINST('".$searchString."')")
-            ->whereRaw("MATCH(uq)AGAINST('".$searchString."' IN BOOLEAN MODE)");
+        $query->selectRaw("*, MATCH(uq) AGAINST('".$searchString."')")
+            ->whereRaw("MATCH(uq) AGAINST('?' IN BOOLEAN MODE)", );
 
     }
 

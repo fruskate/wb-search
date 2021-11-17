@@ -1,9 +1,19 @@
 <?php namespace Frukt\Searcher\Console;
 
+use Frukt\Searcher\Classes\Import\CsvReader;
+use Frukt\Searcher\Classes\Import\CsvReaderHelper;
+use Frukt\Searcher\Classes\Import\TemporaryCollections;
+use Frukt\Searcher\Models\Item;
+use Frukt\Searcher\Models\Popular;
 use Illuminate\Console\Command;
 
+/**
+ *
+ */
 class LoadPopularity extends Command
 {
+    use TemporaryCollections, CsvReaderHelper;
+
     /**
      * @var string The console command name.
      */
@@ -15,52 +25,61 @@ class LoadPopularity extends Command
     protected $description = 'Импорт популярности';
 
     /**
+     * @var string
+     */
+    private string $path = 'datasets/query_popularity_tab.csv';
+
+    /**
+     * Chunk limit
+     */
+    protected const CHUNK = 1000;
+
+    /**
      * Execute the console command.
      * @return void
      */
     public function handle()
     {
         $this->output->title('Импорт начался');
+        $progressBar = $this->output->createProgressBar($this->getReader()->length());
 
-        $c =0;
-        $fp = fopen(plugins_path('frukt/searcher/assets/datasets/query_popularity_tab.csv'),"r");
-        if($fp){
-            while(!feof($fp)){
-                $content = fgets($fp);
-                if($content)    $c++;
+        $i = 0;
+        foreach ($this->getReader()->iterate() as $item) {
+            $i++;
+            $this->getItemCollection()->push($this->parseItem($item));
+
+            if ($i === static::CHUNK) {
+                $i = 0;
+                $this->importChunk();
             }
+
+            $this->rows++;
+            $progressBar->advance();
         }
-        fclose($fp);
-        $bar = $this->output->createProgressBar($c);
 
-        $row = 1;
-        if (($handle = fopen(plugins_path('frukt/searcher/assets/datasets/query_popularity_tab.csv'), "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, "\t")) !== FALSE) {
-                //$num = count($data);
-                //trace_log("$num полей в строке $row:");
-                if ($row > 1) {
-                    try {
-                        \Frukt\Searcher\Models\Popular::where('name', trim($data[0]))->firstOrCreate([
-                            'name' => trim($data[0]),
-                            'popularity' => $data[1]
-                        ]);
-                    } catch (\Exception $exception) {
-                        trace_log('Ошибка в данных');
-                        trace_log($data);
-                    }
+        $progressBar->finish();
+        $this->output->success("Импорт завершён. Загружено {$this->rows} строк.");
+    }
 
-                    /* for ($c=0; $c < $num; $c++) {
-                        trace_log($data[$c]);
-                    } */
-                }
+    /**
+     *
+     */
+    private function importChunk(): void
+    {
+        Popular::query()->insert($this->getItemCollection()->all());
+        $this->initCollection();
+    }
 
-                $row++;
-                $bar->advance();
-            }
-            fclose($handle);
-        }
-        $bar->finish();
-        $this->output->success('Импорт завершён. Загружено '.$row.' строк.');
+    /**
+     * @param array $item
+     * @return array
+     */
+    private function parseItem(array $item): array
+    {
+        return [
+            'name' => trim($item['query']),
+            'popularity' => $item['query_popularity'],
+        ];
     }
 
     /**
